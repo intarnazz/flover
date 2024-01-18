@@ -30,7 +30,7 @@
   </section>
 </template>
 
-<style lang="sass">
+<style scoped lang="sass">
 .opener
   display: flex
   gap: 1em

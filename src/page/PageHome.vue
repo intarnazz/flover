@@ -1,10 +1,12 @@
 <script setup>
-import ComponentOpener from "@/components/ComponentOpener.vue";
+import SectionOpener from "@/components/section/SectionOpener.vue";
+import SectionSales from "@/components/section/SectionSales.vue";
 </script>
 
 <template>
   <main class="main">
-    <ComponentOpener />
+    <SectionOpener />
+    <SectionSales />
   </main>
 </template>
 
