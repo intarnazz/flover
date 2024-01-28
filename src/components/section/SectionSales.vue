@@ -1,11 +1,13 @@
 <script setup>
 import ComponentTitle from "@/components/ComponentTitle.vue";
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
-const floversObg = ref();
-const slider = ref(0);
+const floversArr = ref([]);
+const slider = ref(-599);
+const sliderTransition = ref(false);
+const sliderEventNum = ref(1);
 
 onMounted(async () => {
   flovers.value = await fetch(`${API_URL}api/GetFlovers`)
@@ -15,13 +17,45 @@ onMounted(async () => {
       return json;
     });
   console.log(flovers.value);
-  floversObg.value = Object.keys(flovers.value);
-  console.log(floversObg.value);
-  console.log(floversObg.value[0]);
+  floversArr.value = Object.values(flovers.value);
 });
 
 function sliderEvent(event) {
-  slider.value += event;
+  if (sliderTransition.value == false) {
+    if (event == "right") {
+      slider.value += 288 * sliderEventNum.value;
+
+      var item = floversArr.value.shift();
+      floversArr.value.push(item);
+
+      setTimeout(() => {
+        sliderTransition.value = true;
+        slider.value -= 288 * sliderEventNum.value;
+        setTimeout(() => {
+          sliderTransition.value = false;
+          sliderEventNum.value = 1
+
+        }, 1000);
+      }, 1);
+    } else if (event == "left") {
+      sliderTransition.value = false;
+      slider.value -= 288 * sliderEventNum.value;
+
+      var item = floversArr.value.pop();
+      floversArr.value.unshift(item);
+
+      setTimeout(() => {
+        sliderTransition.value = true;
+        slider.value += 288 * sliderEventNum.value;
+        setTimeout(() => {
+          sliderTransition.value = false;
+          sliderEventNum.value = 1
+        }, 1000);
+      }, 1);
+    }
+  } else {
+    ++sliderEventNum.value
+  }
 }
 </script>
 
@@ -30,71 +64,57 @@ function sliderEvent(event) {
     <ComponentTitle title="Best sales" />
 
     <button
-      @click="sliderEvent(-1)"
+      @click="sliderEvent('left')"
       class="slider__button slider__button_left button"
     >
       Left
     </button>
     <button
-      @click="sliderEvent(1)"
+      @click="sliderEvent('right')"
       class="slider__button slider__button_right button"
     >
       Right
     </button>
-    <ul class="sales__list">
-      <template v-for="(value, key) in flovers" :key="key">
-        <li
-          v-if="
-            key == floversObg[0] ||
-            key == floversObg[1] ||
-            key == floversObg[2] ||
-            key == floversObg[3] ||
-            key == floversObg[4] ||
-            key == floversObg[5]
-          "
-          class="sales__item slider"
-          :style="{
-            left:
-              key == floversObg[0]
-                ? `${-256 * (1 + slider) - 16 * 3}px`
-                : key == floversObg[1]
-                ? `${-256 * (1 + slider) - 16 * 2}px`
-                : key == floversObg[2]
-                ? `${-256 * (1 + slider) - 16}px`
-                : key == floversObg[3]
-                ? `${-256 * (1 + slider)}px`
-                : key == floversObg[4]
-                ? `${-256 * (1 + slider) + 16}px`
-                : key == floversObg[5]
-                ?  `${-256 * (1 + slider) + 16 * 2}px`
-                : 'auto',
-          }"
-        >
-          <div class="sales__item-header">
-            <img
-              class="sales__img"
-              :src="`${API_URL}api/GetFloverImage/${value.name}`"
-              alt=""
-            />
-            <h4 class="sales__flover-name">{{ value.name }}</h4>
-          </div>
-          <div class="sales__price-warpper">
-            <div class="sales__price">{{ value.price }}$</div>
-            <div class="sales__add-to-car">
-              <span class="material-symbols-outlined"> shopping_cart </span> add
-              to car
+    <div class="slider-box">
+      <ul
+        class="sales__list"
+        :class="{ transition: sliderTransition }"
+        :style="`margin-left: ${slider}px;`"
+      >
+        <template v-for="(value, key) in floversArr" :key="key">
+          <li class="sales__item slider">
+            <div class="sales__item-header">
+              <img
+                class="sales__img"
+                :src="`${API_URL}api/GetFloverImage/${value.name}`"
+                alt=""
+              />
+              <h4 class="sales__flover-name">{{ value.name }}</h4>
             </div>
-          </div>
-        </li>
-      </template>
-    </ul>
+            <div class="sales__price-warpper">
+              <div class="sales__price">{{ value.price }}$</div>
+              <div class="sales__add-to-car">
+                <span class="material-symbols-outlined"> shopping_cart </span>
+                add to car
+              </div>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
   </section>
 </template>
 
 <style scoped lang="sass">
-.slider
+.transition
   transition: 1s
+.slider-box // На нахуй
+  width: 100%
+  overflow: hidden
+.slider
   position: relative
+  top: 0
+  left: 0
   &__button
     position: absolute
     top: 200px
@@ -131,10 +151,9 @@ function sliderEvent(event) {
   &__list
     display: flex
     justify-content: space-between
-    width: 100%
     overflow: hidden
     position: relative
-    transition: 1s
+    gap: .8em
   &__item
     padding: 1em
     background-color: #fff
