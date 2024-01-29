@@ -12,6 +12,7 @@ const props = defineProps(["title"]);
 
 <style scoped lang="sass">
 .title
+  width:  600px
   display: flex
   align-content: center
   justify-content: space-between

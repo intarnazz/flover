@@ -5,8 +5,7 @@ import { onMounted, ref } from "vue";
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
 const floversArr = ref([]);
-const slider = ref(-599);
-const sliderTransition = ref(false);
+const slider = ref(-1510);
 
 onMounted(async () => {
   flovers.value = await fetch(`${API_URL}api/GetFlovers`)
@@ -17,9 +16,11 @@ onMounted(async () => {
     });
   console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
+  floversArr.value = [...floversArr.value, ...floversArr.value];
 });
 
-function sliderEvent(event) { // пока так
+function sliderEvent(event) {
+  // пока так
   if (event == "right") {
     slider.value += 288;
 
@@ -38,8 +39,8 @@ function sliderEvent(event) { // пока так
   } else if (event == "left") {
     slider.value -= 288;
 
-    var item = floversArr.value.shift();
-    floversArr.value.push(item);
+    var item = floversArr.value.pop();
+    floversArr.value.unshift(item);
 
     var setIntervalTimeOutLeft = 0;
     var sliderSet = setInterval(() => {
