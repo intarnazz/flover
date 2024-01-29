@@ -1,13 +1,12 @@
 <script setup>
 import ComponentTitle from "@/components/ComponentTitle.vue";
-import { nextTick, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
 const floversArr = ref([]);
 const slider = ref(-599);
 const sliderTransition = ref(false);
-const sliderEventNum = ref(1);
 
 onMounted(async () => {
   flovers.value = await fetch(`${API_URL}api/GetFlovers`)
@@ -20,41 +19,37 @@ onMounted(async () => {
   floversArr.value = Object.values(flovers.value);
 });
 
-function sliderEvent(event) {
-  if (sliderTransition.value == false) {
-    if (event == "right") {
-      slider.value += 288 * sliderEventNum.value;
+function sliderEvent(event) { // пока так
+  if (event == "right") {
+    slider.value += 288;
 
-      var item = floversArr.value.shift();
-      floversArr.value.push(item);
+    var item = floversArr.value.shift();
+    floversArr.value.push(item);
 
-      setTimeout(() => {
-        sliderTransition.value = true;
-        slider.value -= 288 * sliderEventNum.value;
-        setTimeout(() => {
-          sliderTransition.value = false;
-          sliderEventNum.value = 1
+    var setIntervalTimeOutRight = 0;
+    var sliderSet = setInterval(() => {
+      slider.value -= 1;
+      if (setIntervalTimeOutRight >= 288) {
+        clearInterval(sliderSet);
+      } else {
+        setIntervalTimeOutRight++;
+      }
+    }, 1);
+  } else if (event == "left") {
+    slider.value -= 288;
 
-        }, 1000);
-      }, 1);
-    } else if (event == "left") {
-      sliderTransition.value = false;
-      slider.value -= 288 * sliderEventNum.value;
+    var item = floversArr.value.shift();
+    floversArr.value.push(item);
 
-      var item = floversArr.value.pop();
-      floversArr.value.unshift(item);
-
-      setTimeout(() => {
-        sliderTransition.value = true;
-        slider.value += 288 * sliderEventNum.value;
-        setTimeout(() => {
-          sliderTransition.value = false;
-          sliderEventNum.value = 1
-        }, 1000);
-      }, 1);
-    }
-  } else {
-    ++sliderEventNum.value
+    var setIntervalTimeOutLeft = 0;
+    var sliderSet = setInterval(() => {
+      slider.value += 1;
+      if (setIntervalTimeOutLeft >= 288) {
+        clearInterval(sliderSet);
+      } else {
+        setIntervalTimeOutLeft++;
+      }
+    }, 1);
   }
 }
 </script>
@@ -76,11 +71,7 @@ function sliderEvent(event) {
       Right
     </button>
     <div class="slider-box">
-      <ul
-        class="sales__list"
-        :class="{ transition: sliderTransition }"
-        :style="`margin-left: ${slider}px;`"
-      >
+      <ul class="sales__list" :style="`margin-left: ${slider}px;`">
         <template v-for="(value, key) in floversArr" :key="key">
           <li class="sales__item slider">
             <div class="sales__item-header">
@@ -106,8 +97,6 @@ function sliderEvent(event) {
 </template>
 
 <style scoped lang="sass">
-.transition
-  transition: 1s
 .slider-box // На нахуй
   width: 100%
   overflow: hidden
