@@ -1,41 +1,34 @@
 <script setup>
 import LayoutWrapper from "@/layout/LayoutWrapper.vue";
-
 </script>
 
 <template>
   <header class="header">
     <LayoutWrapper class="header__wrapper">
-      <h2>
-        <samn class="header__color color">Flower</samn> Shop
-      </h2>
+      <h2 class="header__logo"><samn class="header__color color">Flower</samn> Shop</h2>
       <nav class="header__nav nav">
         <ul class="nav__list">
           <li class="nav__item">
-            Home
+            <RouterLink :to="{ name: 'Home' }"> Home </RouterLink>
           </li>
           <li class="nav__item">
-            Shop
+            <RouterLink :to="{ name: 'Shop' }"> Shop </RouterLink>
           </li>
           <li class="nav__item">
-            About
+            <RouterLink :to="{ name: 'About' }"> About </RouterLink>
           </li>
         </ul>
       </nav>
       <div class="header__icons">
-        <span class="material-symbols-outlined">
-          person
-        </span>
-        <span class="material-symbols-outlined">
-          shopping_cart
-        </span>
+        <span class="material-symbols-outlined"> person </span>
+        <span class="material-symbols-outlined"> shopping_cart </span>
       </div>
     </LayoutWrapper>
   </header>
 </template>
 
 <style scoped lang="sass">
-.material-symbols-outlined 
+.material-symbols-outlined
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
   color: $mainColor
   font-size: 2.3em
@@ -58,4 +51,9 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
     display: flex
     align-items: center
     justify-content: space-between
+  // &__logo
+
+  // &__icons
+
+
 </style>
