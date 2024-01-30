@@ -1,32 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import { PostLogin } from "@/api/api.js";
 
-const API_URL = import.meta.env.VITE_API_URL;
 const login = ref("");
 const password = ref("");
 
 async function loginPost() {
-  await fetch(`${API_URL}api/PostLogin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      login: login.value,
-      password: password.value,
-    }),
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      if (json.code == 200) {
-        localStorage.setItem("login", login.value);
-        localStorage.setItem("password", password.value);
-      }
-    })
-    .catch((e) => {
-      throw e;
-    });
+  try {
+    await PostLogin(login.value, password.value);
+  } catch (e) {
+    console.log(e);
+  }
 }
 </script>
 
@@ -40,11 +24,26 @@ async function loginPost() {
               <h2 class="componemt-authorization__h2">Login</h2>
               Back to home
             </div>
-            <div class="componemt-authorization__header-bottom">Login and have more fun</div>
+            <div class="componemt-authorization__header-bottom">
+              Login and have more fun
+            </div>
           </header>
-          <form @submit.prevent="loginPost" class="componemt-authorization__form">
-            <input v-model="login" name="login" placeholder="Username" type="text" />
-            <input v-model="password" name="password" placeholder="Password" type="password" />
+          <form
+            @submit.prevent="loginPost"
+            class="componemt-authorization__form"
+          >
+            <input
+              v-model="login"
+              name="login"
+              placeholder="Username"
+              type="text"
+            />
+            <input
+              v-model="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+            />
             <input value="Login" class="button" type="submit" />
           </form>
         </div>
@@ -55,10 +54,13 @@ async function loginPost() {
         </RouterLink>
       </div>
 
-      <img class="componemt-authorization__img" src="@/assets/img/login.png" alt="" />
+      <img
+        class="componemt-authorization__img"
+        src="@/assets/img/login.png"
+        alt=""
+      />
     </div>
   </section>
 </template>
 
-<style scoped lang="sass">
-</style>
+<style scoped lang="sass"></style>

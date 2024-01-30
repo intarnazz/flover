@@ -4,6 +4,7 @@ import Shop from "@/page/PageShop.vue";
 import About from "@/page/PageAbout.vue";
 import Login from "@/page/PageLogin.vue";
 import Reg from "@/page/PageReg.vue";
+import Cart from "@/page/PageCart.vue";
 const routes = [
   {
     path: "/",
@@ -29,6 +30,11 @@ const routes = [
     path: "/Reg",
     name: "Reg",
     component: Reg,
+  },
+  {
+    path: "/Cart",
+    name: "Cart",
+    component: Cart,
   },
   // {
   //   path: "/:catchAll(.*)",

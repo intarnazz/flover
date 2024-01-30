@@ -5,9 +5,11 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
 <template>
   <header class="header">
     <LayoutWrapper class="header__wrapper">
-      <h2 class="header__logo">
-        <samn class="header__color color">Flower</samn> Shop
-      </h2>
+      <RouterLink :to="{ name: 'Home' }">
+        <h2 class="header__logo">
+          <samn class="header__color color">Flower</samn> Shop
+        </h2>
+      </RouterLink>
       <nav class="header__nav nav">
         <ul class="nav__list">
           <li class="nav__item">
@@ -25,7 +27,9 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
         <routerLink :to="{ name: 'Login' }">
           <span class="material-symbols-outlined"> person </span>
         </routerLink>
-        <span class="material-symbols-outlined"> shopping_cart </span>
+        <routerLink :to="{ name: 'Cart' }">
+          <span class="material-symbols-outlined"> shopping_cart </span>
+        </routerLink>
       </div>
     </LayoutWrapper>
   </header>

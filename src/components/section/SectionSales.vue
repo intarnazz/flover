@@ -1,6 +1,7 @@
 <script setup>
 import ComponentTitle from "@/components/ComponentTitle.vue";
 import { onMounted, ref } from "vue";
+import { GetFlovers } from "@/api/api.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
@@ -8,12 +9,7 @@ const floversArr = ref([]);
 const slider = ref(-1510);
 
 onMounted(async () => {
-  flovers.value = await fetch(`${API_URL}api/GetFlovers`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      return json;
-    });
+  flovers.value = await GetFlovers();
   console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
   floversArr.value = [...floversArr.value, ...floversArr.value];

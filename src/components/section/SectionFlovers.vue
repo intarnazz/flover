@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
+import { GetFlovers } from "@/api/api.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
@@ -10,12 +11,7 @@ const sortBy = ref("price");
 const reverse = ref(false);
 
 onMounted(async () => {
-  flovers.value = await fetch(`${API_URL}api/GetFlovers`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      return json;
-    });
+  flovers.value = await GetFlovers();
   console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
 

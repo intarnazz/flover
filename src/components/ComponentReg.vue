@@ -1,34 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import { PostReg } from "@/api/api.js";
 
-const API_URL = import.meta.env.VITE_API_URL;
 const login = ref("");
 const email = ref("");
 const password = ref("");
 
 async function loginPost() {
-  await fetch(`${API_URL}api/PostReg`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      login: login.value,
-      email: email.value,
-      password: password.value,
-    }),
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      if (json.code == 200) {
-        localStorage.setItem("login", login.value);
-        localStorage.setItem("password", password.value);
-      }
-    })
-    .catch((e) => {
-      throw e;
-    });
+  try {
+    await PostReg(login.value, email.value, password.value);
+  } catch (e) {
+    console.log(e);
+  }
 }
 </script>
 
@@ -42,12 +25,32 @@ async function loginPost() {
               <h2 class="componemt-authorization__h2">Register</h2>
               Back to home
             </div>
-            <div class="componemt-authorization__header-bottom">Register and help us help you</div>
+            <div class="componemt-authorization__header-bottom">
+              Register and help us help you
+            </div>
           </header>
-          <form @submit.prevent="loginPost" class="componemt-authorization__form">
-            <input v-model="login" name="login" placeholder="Username" type="text" />
-            <input v-model="email" name="mail" placeholder="Email" type="text" />
-            <input v-model="password" name="password" placeholder="Password" type="password" />
+          <form
+            @submit.prevent="loginPost"
+            class="componemt-authorization__form"
+          >
+            <input
+              v-model="login"
+              name="login"
+              placeholder="Username"
+              type="text"
+            />
+            <input
+              v-model="email"
+              name="mail"
+              placeholder="Email"
+              type="text"
+            />
+            <input
+              v-model="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+            />
             <input value="Register" class="button" type="submit" />
           </form>
         </div>
@@ -57,10 +60,13 @@ async function loginPost() {
           </div>
         </RouterLink>
       </div>
-      <img class="componemt-authorization__img" src="@/assets/img/reg.png" alt="" />
+      <img
+        class="componemt-authorization__img"
+        src="@/assets/img/reg.png"
+        alt=""
+      />
     </div>
   </section>
 </template>
 
-<style scoped lang="sass">
-</style>
+<style scoped lang="sass"></style>
