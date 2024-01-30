@@ -31,15 +31,15 @@ body
   border-radius: 6px
 
 input:-webkit-autofill
-  -webkit-box-shadow: 0 0 0 1000px $colorGray inset !important
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important
   color: #fff
 
 input:-moz-autofill
-  box-shadow: 0 0 0 1000px $colorGray inset !important
+  box-shadow: 0 0 0 1000px #fff inset !important
   color: #fff
 
 input:-webkit-autofill
-  -webkit-text-fill-color: #fff !important
+  -webkit-text-fill-color: #000 !important
 
 input
   color: $textColor
@@ -68,3 +68,13 @@ h2
   color: $textColorSecond
   padding: .5em 1em
   border-radius: 5px
+  transition: .3s
+  border: 2px solid $none
+  cursor: pointer
+.button:hover
+  background-color: $none
+  color: $mainColor
+  border: 2px solid $mainColor
+
+.main-color
+  color: $mainColor

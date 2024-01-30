@@ -4,4 +4,4 @@
   <main class="main">PageAbout</main>
 </template>
 
-<style lang="sass"></style>
+<style lang="sass" scoped></style>

@@ -12,7 +12,7 @@ import SectionLatestReviews from "@/components/section/SectionLatestReviews.vue"
   </main>
 </template>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .main
   display: flex
   flex-direction: column
