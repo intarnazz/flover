@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { GetFlovers } from "@/api/api.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref();
-const flovers_LS = ref();
+const flovers_LS = ref([]);
 
 onMounted(async () => {
   console.log(flovers.value);
@@ -24,14 +24,32 @@ onMounted(async () => {
   }
 });
 
+const flovers_LS_all_price = computed(() => {
+  return flovers_LS.value.reduce(
+    (accumulator, currentObject) => accumulator + currentObject.price,
+    0
+  );
+});
+
+const flovers_LS_all_num = computed(() => {
+  return flovers_LS.value.reduce(
+    (accumulator, currentObject) => accumulator + currentObject.num,
+    0
+  );
+});
+
+const chek = computed(() => {
+  return flovers_LS_all_num.value * flovers_LS_all_price.value;
+});
+
 function floverNumChange(key, num) {
   flovers_LS.value[key].num += num;
-  console.log('flovers_LS.value[key].num: ', flovers_LS.value[key].num);
+  console.log("flovers_LS.value[key].num: ", flovers_LS.value[key].num);
   localStorage.setItem("flovers", JSON.stringify(flovers_LS.value));
 }
 
 function delAllEvent() {
-  flovers_LS.value = []
+  flovers_LS.value = [];
   localStorage.setItem("flovers", JSON.stringify([]));
 }
 </script>
@@ -89,7 +107,9 @@ function delAllEvent() {
       </ul>
     </div>
     <div class="cart__chek">
-      <div class="cart__chek-info"></div>
+      <div class="cart__chek-info">
+        Subtotal for {{ flovers_LS_all_num }} items: {{ chek }}$
+      </div>
       <button class="cart__chek-button button">Checkout</button>
     </div>
   </section>
@@ -101,6 +121,9 @@ function delAllEvent() {
   gap: 2em
   align-items: flex-start
   padding: 3em 0
+  &__chek-info
+    font-weight: 400
+    font-size: 1.3em
   &__button-del-all
     display: flex
     align-items: center
@@ -150,6 +173,9 @@ function delAllEvent() {
     background: #fff
     padding: 1em
     border-radius: 10px
+    display: flex
+    flex-direction: column
+    gap: 1em
   &__item
     display: flex
     gap: 1em

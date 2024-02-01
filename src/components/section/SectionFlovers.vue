@@ -57,17 +57,18 @@ function addToCarEvent(name) {
   console.log("flovers_LS: ", flovers_LS);
   if (flovers_LS.length != 0) {
     console.log("if: ", flovers_LS);
-    var flovers_LS_id;
+    var flovers_LS_id = false;
     for (let i = 0; i < flovers_LS.length; i++) {
       if (name == flovers_LS[i].name) {
         flovers_LS_id = i;
         break;
       }
     }
-    if (flovers_LS_id) {
+    if (flovers_LS_id !== false) {
       flovers_LS[flovers_LS_id].num += 1;
-      console.log('flovers_LS[flovers_LS_id]: ', flovers_LS[flovers_LS_id]);
+      console.log('if (flovers_LS_id) - ', flovers_LS);
     } else {
+      console.log('else (flovers_LS_id) - ', flovers_LS_id);
       flovers_LS = [
         ...flovers_LS,
         {

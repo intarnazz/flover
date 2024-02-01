@@ -12,10 +12,14 @@ onMounted(async () => {
   flovers.value = await GetFlovers();
   console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
-  console.log(floversArr.value.length);
-  slider.value = -floversArr.value.length * 288 + 500
+  floversArr.value = [
+    ...floversArr.value,
+    ...floversArr.value,
+    ...floversArr.value,
+    ...floversArr.value,
+  ];
+  slider.value = (-floversArr.value.length * 288) / 3;
   console.log(slider.value);
-  floversArr.value = [...floversArr.value, ...floversArr.value];
 });
 
 function sliderEvent(event) {
