@@ -8,21 +8,6 @@ const flovers_LS = ref();
 
 onMounted(async () => {
   console.log(flovers.value);
-  localStorage.setItem(
-    "flovers",
-    JSON.stringify([
-      {
-        name: "borodon",
-        num: 2,
-        price: "",
-      },
-      {
-        name: "poroper",
-        num: 1,
-        price: "",
-      },
-    ])
-  );
   flovers_LS.value = JSON.parse(localStorage.getItem("flovers"));
   console.log(flovers_LS.value);
 
@@ -41,13 +26,25 @@ onMounted(async () => {
 
 function floverNumChange(key, num) {
   flovers_LS.value[key].num += num;
+  console.log('flovers_LS.value[key].num: ', flovers_LS.value[key].num);
+  localStorage.setItem("flovers", JSON.stringify(flovers_LS.value));
+}
+
+function delAllEvent() {
+  flovers_LS.value = []
+  localStorage.setItem("flovers", JSON.stringify([]));
 }
 </script>
 
 <template>
   <section class="cart">
     <div class="cart__box">
-      <h2 class="cart__h2">Your Cart</h2>
+      <div class="cart__title-wrapper">
+        <h2 class="cart__h2">Your Cart</h2>
+        <div @click="delAllEvent()" class="cart__button-del-all">
+          del all <span class="material-symbols-outlined"> delete </span>
+        </div>
+      </div>
       <ul class="cart__list">
         <template v-for="(value, key) in flovers_LS" :key="key">
           <li class="cart__item">
@@ -104,6 +101,14 @@ function floverNumChange(key, num) {
   gap: 2em
   align-items: flex-start
   padding: 3em 0
+  &__button-del-all
+    display: flex
+    align-items: center
+    cursor: pointer
+  &__title-wrapper
+    display: flex
+    align-items: center
+    justify-content: space-between
   &__button
     &_left
       border-top-right-radius: 0px

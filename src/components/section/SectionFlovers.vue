@@ -51,6 +51,47 @@ function reverseChange() {
     reverse.value = true;
   }
 }
+
+function addToCarEvent(name) {
+  var flovers_LS = JSON.parse(localStorage.getItem("flovers"));
+  console.log("flovers_LS: ", flovers_LS);
+  if (flovers_LS.length != 0) {
+    console.log("if: ", flovers_LS);
+    var flovers_LS_id;
+    for (let i = 0; i < flovers_LS.length; i++) {
+      if (name == flovers_LS[i].name) {
+        flovers_LS_id = i;
+        break;
+      }
+    }
+    if (flovers_LS_id) {
+      flovers_LS[flovers_LS_id].num += 1;
+      console.log('flovers_LS[flovers_LS_id]: ', flovers_LS[flovers_LS_id]);
+    } else {
+      flovers_LS = [
+        ...flovers_LS,
+        {
+          name: name,
+          num: 1,
+          price: "",
+        },
+      ];
+    }
+  } else {
+    console.log("else: ", flovers_LS);
+    flovers_LS = [
+      {
+        name: name,
+        num: 1,
+        price: "",
+      },
+    ];
+  }
+
+  console.log(flovers_LS);
+
+  localStorage.setItem("flovers", JSON.stringify(flovers_LS));
+}
 </script>
 
 <template>
@@ -109,7 +150,7 @@ function reverseChange() {
           </div>
           <div class="sales__price-warpper">
             <div class="sales__price">{{ value.price }}$</div>
-            <div class="sales__add-to-car">
+            <div @click="addToCarEvent(value.name)" class="sales__add-to-car">
               <span class="material-symbols-outlined"> shopping_cart </span>
               add to car
             </div>
@@ -198,6 +239,10 @@ function reverseChange() {
     display: flex
     align-items: center
     gap: .4em
+    cursor: pointer
+    transition: .1s
+  &__add-to-car:active
+    transform: scale(1.1)
   &__list
     display: flex
     justify-content: space-between
