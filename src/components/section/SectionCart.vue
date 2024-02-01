@@ -26,7 +26,8 @@ onMounted(async () => {
 
 const flovers_LS_all_price = computed(() => {
   return flovers_LS.value.reduce(
-    (accumulator, currentObject) => accumulator + currentObject.price,
+    (accumulator, currentObject) =>
+      accumulator + currentObject.price * currentObject.num,
     0
   );
 });
@@ -36,10 +37,6 @@ const flovers_LS_all_num = computed(() => {
     (accumulator, currentObject) => accumulator + currentObject.num,
     0
   );
-});
-
-const chek = computed(() => {
-  return flovers_LS_all_num.value * flovers_LS_all_price.value;
 });
 
 function floverNumChange(key, num) {
@@ -106,11 +103,11 @@ function delAllEvent() {
         </template>
       </ul>
     </div>
-    <div class="cart__chek">
-      <div class="cart__chek-info">
-        Subtotal for {{ flovers_LS_all_num }} items: {{ chek }}$
+    <div class="cart__flovers_LS_all_price">
+      <div class="cart__flovers_LS_all_price-info">
+        Subtotal for {{ flovers_LS_all_num }} items: {{ flovers_LS_all_price }}$
       </div>
-      <button class="cart__chek-button button">Checkout</button>
+      <button class="cart__flovers_LS_all_price-button button">Checkout</button>
     </div>
   </section>
 </template>
@@ -121,7 +118,7 @@ function delAllEvent() {
   gap: 2em
   align-items: flex-start
   padding: 3em 0
-  &__chek-info
+  &__flovers_LS_all_price-info
     font-weight: 400
     font-size: 1.3em
   &__button-del-all
@@ -169,7 +166,7 @@ function delAllEvent() {
     display: flex
     flex-direction: column
     gap: 2em
-  &__chek
+  &__flovers_LS_all_price
     background: #fff
     padding: 1em
     border-radius: 10px

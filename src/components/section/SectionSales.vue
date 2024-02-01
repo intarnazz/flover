@@ -2,6 +2,8 @@
 import ComponentTitle from "@/components/ComponentTitle.vue";
 import { onMounted, ref } from "vue";
 import { GetFlovers } from "@/api/api.js";
+import { addToCart } from "@/AddToCart/addToCart.js";
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
@@ -88,7 +90,7 @@ function sliderEvent(event) {
             </div>
             <div class="sales__price-warpper">
               <div class="sales__price">{{ value.price }}$</div>
-              <div class="sales__add-to-car">
+              <div @click="addToCart(value.name)" class="sales__add-to-cart add-to-cart">
                 <span class="material-symbols-outlined"> shopping_cart </span>
                 add to car
               </div>

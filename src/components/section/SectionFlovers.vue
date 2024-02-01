@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { GetFlovers } from "@/api/api.js";
+import { addToCart } from "@/AddToCart/addToCart.js";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
@@ -50,48 +51,6 @@ function reverseChange() {
   } else {
     reverse.value = true;
   }
-}
-
-function addToCarEvent(name) {
-  var flovers_LS = JSON.parse(localStorage.getItem("flovers"));
-  console.log("flovers_LS: ", flovers_LS);
-  if (flovers_LS.length != 0) {
-    console.log("if: ", flovers_LS);
-    var flovers_LS_id = false;
-    for (let i = 0; i < flovers_LS.length; i++) {
-      if (name == flovers_LS[i].name) {
-        flovers_LS_id = i;
-        break;
-      }
-    }
-    if (flovers_LS_id !== false) {
-      flovers_LS[flovers_LS_id].num += 1;
-      console.log('if (flovers_LS_id) - ', flovers_LS);
-    } else {
-      console.log('else (flovers_LS_id) - ', flovers_LS_id);
-      flovers_LS = [
-        ...flovers_LS,
-        {
-          name: name,
-          num: 1,
-          price: "",
-        },
-      ];
-    }
-  } else {
-    console.log("else: ", flovers_LS);
-    flovers_LS = [
-      {
-        name: name,
-        num: 1,
-        price: "",
-      },
-    ];
-  }
-
-  console.log(flovers_LS);
-
-  localStorage.setItem("flovers", JSON.stringify(flovers_LS));
 }
 </script>
 
@@ -151,7 +110,7 @@ function addToCarEvent(name) {
           </div>
           <div class="sales__price-warpper">
             <div class="sales__price">{{ value.price }}$</div>
-            <div @click="addToCarEvent(value.name)" class="sales__add-to-car">
+            <div @click="addToCart(value.name)" class="sales__add-to-cart add-to-cart">
               <span class="material-symbols-outlined"> shopping_cart </span>
               add to car
             </div>
@@ -235,15 +194,6 @@ function addToCarEvent(name) {
   &__price-warpper
     display: flex
     justify-content: space-between
-  &__add-to-car
-    color: $mainColor
-    display: flex
-    align-items: center
-    gap: .4em
-    cursor: pointer
-    transition: .1s
-  &__add-to-car:active
-    transform: scale(1.1)
   &__list
     display: flex
     justify-content: space-between
