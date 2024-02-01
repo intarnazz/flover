@@ -49,6 +49,10 @@ function delAllEvent() {
   flovers_LS.value = [];
   localStorage.setItem("flovers", JSON.stringify([]));
 }
+
+function delFloverEvent(key) {
+  flovers_LS.value.splice(key, 1);
+}
 </script>
 
 <template>
@@ -73,7 +77,9 @@ function delAllEvent() {
                 <h3 class="cart__h3">
                   {{ value.name }}
                 </h3>
-                <span class="material-symbols-outlined"> delete </span>
+                <div @click="delFloverEvent(key)" class="cart__del">
+                  <span class="material-symbols-outlined"> delete </span>
+                </div>
               </div>
               <div class="cart__item-info-bottom">
                 <div class="cart__num-wrapper">
@@ -118,6 +124,11 @@ function delAllEvent() {
   gap: 2em
   align-items: flex-start
   padding: 3em 0
+  &__del
+    cursor: pointer
+    transition: .1s
+  &__del:hover
+    transform: scale(1.2)
   &__flovers_LS_all_price-info
     font-weight: 400
     font-size: 1.3em
