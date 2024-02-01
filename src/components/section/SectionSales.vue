@@ -83,7 +83,7 @@ function sliderEvent(event) {
             <div class="sales__item-header">
               <img
                 class="sales__img"
-                :src="`${API_URL}api/GetFloverImage/${value.name}`"
+                :src="`${API_URL}api/GetFloverImage/${value.file_name}`"
                 alt=""
               />
               <h4 class="sales__flover-name">{{ value.name }}</h4>

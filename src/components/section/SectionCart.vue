@@ -69,7 +69,7 @@ function delFloverEvent(key) {
           <li class="cart__item">
             <img
               class="cart__img"
-              :src="`${API_URL}api/GetFloverImage/${value.name}`"
+              :src="`${API_URL}api/GetFloverImage/${value.file_name}`"
               alt=""
             />
             <div class="cart__item-info">

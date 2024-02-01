@@ -103,7 +103,7 @@ function reverseChange() {
           <div class="sales__item-header">
             <img
               class="sales__img"
-              :src="`${API_URL}api/GetFloverImage/${value.name}`"
+              :src="`${API_URL}api/GetFloverImage/${value.file_name}`"
               alt=""
             />
             <h4 class="sales__flover-name">{{ value.name }}</h4>
@@ -171,7 +171,7 @@ function reverseChange() {
     width: 8px
     height: 8px
   &__reverse
-  cursor: pointer
+    cursor: pointer
 
 .material-symbols-outlined
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
