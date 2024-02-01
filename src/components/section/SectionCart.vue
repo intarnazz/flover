@@ -14,12 +14,12 @@ onMounted(async () => {
       {
         name: "borodon",
         num: 2,
-        price: ''
+        price: "",
       },
       {
-        name: "sunFlower",
-        num: 2,
-        price: ''
+        name: "poroper",
+        num: 1,
+        price: "",
       },
     ])
   );
@@ -29,15 +29,19 @@ onMounted(async () => {
   flovers.value = await GetFlovers();
   flovers.value = Object.values(flovers.value);
 
-  flovers.value.forEach((value) => {
-    for (let i = 0; i < flovers.length; i++) {
-      if (value.name == flovers_LS[i].name) {
-        value.price = flovers_LS[i].price;
+  for (let j = 0; j < flovers_LS.value.length; j++) {
+    for (let i = 0; i < flovers.value.length; i++) {
+      if (flovers_LS.value[j].name == flovers_LS.value[i].name) {
+        flovers_LS.value[j].price = flovers.value[i].price;
+        break;
       }
     }
-  });
-  console.log("flovers_LS - ", flovers_LS.value);
+  }
 });
+
+function floverNumChange(key, num) {
+  flovers_LS.value[key].num += num;
+}
 </script>
 
 <template>
@@ -45,7 +49,7 @@ onMounted(async () => {
     <div class="cart__box">
       <h2 class="cart__h2">Your Cart</h2>
       <ul class="cart__list">
-        <template v-for="(value, key) in flovers" :key="key">
+        <template v-for="(value, key) in flovers_LS" :key="key">
           <li class="cart__item">
             <img
               class="cart__img"
@@ -61,10 +65,26 @@ onMounted(async () => {
               </div>
               <div class="cart__item-info-bottom">
                 <div class="cart__num-wrapper">
-                  <div class="cart__price">$price</div>
-                  <div class="cart__num-button button">{{ value.num }}</div>
+                  <div class="cart__price">{{ value.price }}$</div>
+                  <div class="cart__num-button">
+                    <div
+                      @click="floverNumChange(key, -1)"
+                      style="padding: 0.3em 0.6em"
+                      class="cart__button_left button"
+                    >
+                      -
+                    </div>
+                    <div class="cart__button-value">{{ value.num }}</div>
+                    <div
+                      @click="floverNumChange(key, 1)"
+                      style="padding: 0.3em 0.6em"
+                      class="cart__button_right button"
+                    >
+                      +
+                    </div>
+                  </div>
                 </div>
-                <p>Total {{ value.price }}$</p>
+                <p>Total {{ value.price * value.num }}$</p>
               </div>
             </div>
           </li>
@@ -84,6 +104,21 @@ onMounted(async () => {
   gap: 2em
   align-items: flex-start
   padding: 3em 0
+  &__button
+    &_left
+      border-top-right-radius: 0px
+      border-bottom-right-radius: 0px
+    &_right
+      border-top-left-radius: 0px
+      border-bottom-left-radius: 0px
+  &__button-value
+    padding: 0 .5em
+    color: #fff
+    background-color: $mainColor
+    display: flex
+    align-items: center
+  &__num-button
+    display: flex
   &__box
     flex: 1
     display: flex

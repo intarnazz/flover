@@ -6,12 +6,15 @@ import { GetFlovers } from "@/api/api.js";
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
 const floversArr = ref([]);
-const slider = ref(-1510);
+const slider = ref(0);
 
 onMounted(async () => {
   flovers.value = await GetFlovers();
   console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
+  console.log(floversArr.value.length);
+  slider.value = -floversArr.value.length * 288 + 500
+  console.log(slider.value);
   floversArr.value = [...floversArr.value, ...floversArr.value];
 });
 
