@@ -5,6 +5,7 @@ import { GetFlovers } from "@/api/api.js";
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref();
 const flovers_LS = ref([]);
+const loding = ref(false);
 
 onMounted(async () => {
   flovers_LS.value = JSON.parse(localStorage.getItem("flovers"));
@@ -20,6 +21,7 @@ onMounted(async () => {
       }
     }
   }
+  loding.value = true;
 });
 
 const flovers_LS_all_price = computed(() => {
@@ -54,7 +56,7 @@ function delFloverEvent(key) {
 </script>
 
 <template>
-  <section class="cart">
+  <section v-if="loding" class="cart">
     <div class="cart__box">
       <div class="cart__title-wrapper">
         <h2 class="cart__h2">Your Cart</h2>
@@ -114,6 +116,7 @@ function delFloverEvent(key) {
       <button class="cart__flovers_LS_all_price-button button">Checkout</button>
     </div>
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style scoped lang="sass">

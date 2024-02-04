@@ -10,12 +10,14 @@ const search = ref("");
 const sortingOpen = ref(false);
 const sortBy = ref("price");
 const reverse = ref(false);
+const loding = ref(false);
 
 onMounted(async () => {
   flovers.value = await GetFlovers();
   floversArr.value = Object.values(flovers.value);
 
   floversArr.value = floversArr.value.sort((a, b) => a.price - b.price);
+  loding.value = true;
 });
 
 const floversSort = computed(() => {
@@ -54,7 +56,7 @@ function reverseChange() {
 </script>
 
 <template>
-  <section class="sales">
+  <section v-if="loding" class="sales">
     <div class="sales__search search">
       <div
         @click="sortingOpenEvent()"
@@ -109,7 +111,10 @@ function reverseChange() {
           </div>
           <div class="sales__price-warpper">
             <div class="sales__price">{{ value.price }}$</div>
-            <div @click="addToCart(value.name, value.file_name)" class="sales__add-to-cart add-to-cart">
+            <div
+              @click="addToCart(value.name, value.file_name)"
+              class="sales__add-to-cart add-to-cart"
+            >
               <span class="material-symbols-outlined"> shopping_cart </span>
               add to car
             </div>
@@ -118,6 +123,7 @@ function reverseChange() {
       </template>
     </ul>
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style scoped lang="sass">

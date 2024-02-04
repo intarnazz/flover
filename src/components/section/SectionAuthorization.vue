@@ -1,15 +1,22 @@
 <script setup>
 import ComponentLogin from "@/components/ComponentLogin.vue";
 import ComponentReg from "@/components/ComponentReg.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps(["component"]);
+const loding = ref(false);
+
+onMounted(() => {
+  loding.value = true;
+});
 </script>
 
 <template>
-  <section class="form-authorization">
+  <section v-if="loding" class="form-authorization">
     <ComponentLogin v-if="props.component == 'login'" />
     <ComponentReg v-if="props.component == 'reg'" />
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style lang="sass">

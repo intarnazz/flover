@@ -1,7 +1,15 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+
+const loding = ref(false);
+
+onMounted(() => {
+  loding.value = true;
+});
+</script>
 
 <template>
-  <section class="opener">
+  <section v-if="loding" class="opener">
     <div class="opener__title-wrapper">
       <div class="opener__title">Flowers, 🌻 what the world needs</div>
       <div class="opener__sub-text">Browse between hundreds of flowers</div>
@@ -28,6 +36,7 @@
       </li>
     </ul>
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style scoped lang="sass">

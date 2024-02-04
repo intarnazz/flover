@@ -1,9 +1,15 @@
 <script setup>
 import ComponentTitle from "@/components/ComponentTitle.vue";
+import { onMounted, ref } from "vue";
+const loding = ref(false);
+
+onMounted(() => {
+  loding.value = true;
+});
 </script>
 
 <template>
-  <section class="latest-reviews">
+  <section v-if="loding" class="latest-reviews">
     <ComponentTitle title="latest reviews" />
     <div class="latest-reviews__wrapper">
       <ul class="latest-reviews__list">
@@ -71,6 +77,7 @@ import ComponentTitle from "@/components/ComponentTitle.vue";
       </ul>
     </div>
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style scoped lang="sass">

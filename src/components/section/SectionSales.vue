@@ -4,11 +4,11 @@ import { onMounted, ref } from "vue";
 import { GetFlovers } from "@/api/api.js";
 import { addToCart } from "@/AddToCart/addToCart.js";
 
-
 const API_URL = import.meta.env.VITE_API_URL;
 const flovers = ref({});
 const floversArr = ref([]);
 const slider = ref(0);
+const loding = ref(false);
 
 onMounted(async () => {
   flovers.value = await GetFlovers();
@@ -20,6 +20,7 @@ onMounted(async () => {
     ...floversArr.value,
   ];
   slider.value = (-floversArr.value.length * 288) / 3;
+  loding.value = true;
 });
 
 function sliderEvent(event) {
@@ -59,7 +60,7 @@ function sliderEvent(event) {
 </script>
 
 <template>
-  <section class="sales">
+  <section v-if="loding" class="sales">
     <ComponentTitle title="Best sales" />
 
     <button
@@ -88,7 +89,10 @@ function sliderEvent(event) {
             </div>
             <div class="sales__price-warpper">
               <div class="sales__price">{{ value.price }}$</div>
-              <div @click="addToCart(value.name, value.file_name)" class="sales__add-to-cart add-to-cart">
+              <div
+                @click="addToCart(value.name, value.file_name)"
+                class="sales__add-to-cart add-to-cart"
+              >
                 <span class="material-symbols-outlined"> shopping_cart </span>
                 add to car
               </div>
@@ -98,6 +102,7 @@ function sliderEvent(event) {
       </ul>
     </div>
   </section>
+  <h2 v-else>Loding...</h2>
 </template>
 
 <style scoped lang="sass">
