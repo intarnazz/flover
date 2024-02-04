@@ -12,7 +12,6 @@ const slider = ref(0);
 
 onMounted(async () => {
   flovers.value = await GetFlovers();
-  console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
   floversArr.value = [
     ...floversArr.value,
@@ -21,7 +20,6 @@ onMounted(async () => {
     ...floversArr.value,
   ];
   slider.value = (-floversArr.value.length * 288) / 3;
-  console.log(slider.value);
 });
 
 function sliderEvent(event) {
@@ -90,7 +88,7 @@ function sliderEvent(event) {
             </div>
             <div class="sales__price-warpper">
               <div class="sales__price">{{ value.price }}$</div>
-              <div @click="addToCart(value.name)" class="sales__add-to-cart add-to-cart">
+              <div @click="addToCart(value.name, value.file_name)" class="sales__add-to-cart add-to-cart">
                 <span class="material-symbols-outlined"> shopping_cart </span>
                 add to car
               </div>
@@ -103,7 +101,7 @@ function sliderEvent(event) {
 </template>
 
 <style scoped lang="sass">
-.slider-box // На нахуй
+.slider-box
   width: 100%
   overflow: hidden
 .slider

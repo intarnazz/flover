@@ -1,12 +1,13 @@
 <script setup>
 import LayoutWrapper from "@/layout/LayoutWrapper.vue";
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
   <footer class="footer">
     <LayoutWrapper class="footer__wrapper">
       <div class="footer__site-info">
-        <h2><samn class="header__color color">Flower</samn> Shop</h2>
+        <h2><span class="header__color color">Flower</span> Shop</h2>
         <div class="footer__site-info-content">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non debitis
           recusandae numquam quos vel aliquid perspiciatis impedit nobis, fugiat
@@ -19,10 +20,20 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
           <h3>Links</h3>
           <nav class="footer__nav">
             <ul class="footer__nav-list">
-              <li class="footer__nav-item">Home</li>
-              <li class="footer__nav-item">Shop</li>
-              <li class="footer__nav-item">Login</li>
-              <li class="footer__nav-item">Reg</li>
+              <li class="footer__nav-item">
+                <RouterLink :to="{ name: 'Home' }"> Home </RouterLink>
+              </li>
+
+              <li class="footer__nav-item">
+                <RouterLink :to="{ name: 'Shop' }"> Shop </RouterLink>
+              </li>
+              <li class="footer__nav-item">
+                <RouterLink :to="{ name: 'Login' }"> Login </RouterLink>
+              </li>
+
+              <li class="footer__nav-item">
+                <RouterLink :to="{ name: 'Reg' }"> Reg </RouterLink>
+              </li>
             </ul>
           </nav>
         </div>
@@ -78,4 +89,7 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
     display: flex
     flex-direction: column
     gap: .4em
+
+.footer a
+  color: #fff
 </style>

@@ -7,7 +7,7 @@ import LayoutWrapper from "@/layout/LayoutWrapper.vue";
     <LayoutWrapper class="header__wrapper">
       <RouterLink :to="{ name: 'Home' }">
         <h2 class="header__logo">
-          <samn class="header__color color">Flower</samn> Shop
+          <span class="header__color color">Flower</span> Shop
         </h2>
       </RouterLink>
       <nav class="header__nav nav">

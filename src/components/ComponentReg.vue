@@ -10,7 +10,7 @@ async function loginPost() {
   try {
     await PostReg(login.value, email.value, password.value);
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 }
 </script>

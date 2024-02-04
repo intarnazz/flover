@@ -7,9 +7,7 @@ const flovers = ref();
 const flovers_LS = ref([]);
 
 onMounted(async () => {
-  console.log(flovers.value);
   flovers_LS.value = JSON.parse(localStorage.getItem("flovers"));
-  console.log(flovers_LS.value);
 
   flovers.value = await GetFlovers();
   flovers.value = Object.values(flovers.value);
@@ -41,7 +39,6 @@ const flovers_LS_all_num = computed(() => {
 
 function floverNumChange(key, num) {
   flovers_LS.value[key].num += num;
-  console.log("flovers_LS.value[key].num: ", flovers_LS.value[key].num);
   localStorage.setItem("flovers", JSON.stringify(flovers_LS.value));
 }
 
@@ -52,6 +49,7 @@ function delAllEvent() {
 
 function delFloverEvent(key) {
   flovers_LS.value.splice(key, 1);
+  localStorage.setItem("flovers", JSON.stringify(flovers_LS.value));
 }
 </script>
 

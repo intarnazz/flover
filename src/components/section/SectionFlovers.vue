@@ -13,7 +13,6 @@ const reverse = ref(false);
 
 onMounted(async () => {
   flovers.value = await GetFlovers();
-  console.log(flovers.value);
   floversArr.value = Object.values(flovers.value);
 
   floversArr.value = floversArr.value.sort((a, b) => a.price - b.price);
@@ -110,7 +109,7 @@ function reverseChange() {
           </div>
           <div class="sales__price-warpper">
             <div class="sales__price">{{ value.price }}$</div>
-            <div @click="addToCart(value.name)" class="sales__add-to-cart add-to-cart">
+            <div @click="addToCart(value.name, value.file_name)" class="sales__add-to-cart add-to-cart">
               <span class="material-symbols-outlined"> shopping_cart </span>
               add to car
             </div>
