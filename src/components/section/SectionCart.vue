@@ -10,6 +10,11 @@ const loding = ref(false);
 onMounted(async () => {
   flovers_LS.value = JSON.parse(localStorage.getItem("flovers"));
 
+  if (flovers_LS.value == undefined) {
+    flovers_LS.value = [];
+    localStorage.setItem("flovers", JSON.stringify([]));
+  }
+
   flovers.value = await GetFlovers();
   flovers.value = Object.values(flovers.value);
 

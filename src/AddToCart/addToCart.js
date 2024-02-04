@@ -1,5 +1,9 @@
 export function addToCart(name, file_name) {
   var flovers_LS = JSON.parse(localStorage.getItem("flovers"));
+  if (flovers_LS == undefined) {
+    flovers_LS = [];
+    localStorage.setItem("flovers", JSON.stringify([]));
+  }
   if (flovers_LS.length != 0) {
     var flovers_LS_id = false;
     for (let i = 0; i < flovers_LS.length; i++) {
